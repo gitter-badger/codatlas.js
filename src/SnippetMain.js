@@ -1,4 +1,4 @@
-serverUri = "ws://codatlas.com:9020/socket"
+serverUri = "ws://www.codatlas.com:9020/socket"
 
 
 var SourcePageDecorator = require("./SourcepageDecorator.js");
@@ -83,13 +83,13 @@ var $ = require("jquery");
             return function() {
                 window.open("http://www.codatlas.com/gotoSymbol/" + id);
             }
-        };        
+        };
 
         if (metaDataDocument.nodes) {
             $.each(metaDataDocument.nodes, function (i, node) {
                 eventMap = {};
                 eventMap.click = nodeClickFuncMk(node.signature);
-                
+
                 SourcePageDecorator.addSpanToDomTree(block, node, parseNodeClassName_(node.kind), eventMap);
             });
         }
