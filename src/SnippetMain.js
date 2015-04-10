@@ -3,6 +3,7 @@ serverUri = "ws://codatlas.com:9020/socket"
 
 var SourcePageDecorator = require("./SourcepageDecorator.js");
 var MetadataProcessor = require("./MetadataProcessor.js");
+var $ = require("jquery");
 
     // extract plain text from a code block
     function extractLine (a) {
