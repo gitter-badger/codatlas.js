@@ -90,8 +90,6 @@
   // compute the intersection of two range, if two range has no intersection, -1 will be returned if lambdaRange is to
   // the left of spanRange and 1 if the opposite
   var intersectRange_ = function(lambdaRange, spanRange) {
-    console.log("lambda range : %o", lambdaRange );
-    console.log("span range: %o", spanRange);
     if (lambdaRange.end <= spanRange.start) {
       return -1;
     } else if (lambdaRange.start >= spanRange.end) {
