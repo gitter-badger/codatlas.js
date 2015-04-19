@@ -1,7 +1,9 @@
 var serverUri = "ws://www.codatlas.com:9020/socket"
 var SourcePageDecorator = require("./SourcepageDecorator.js");
 var MetadataProcessor = require("./MetadataProcessor.js");
-var $ = require("jquery");
+global.jQuery = require("jquery");
+var $ = global.jQuery;
+require("tooltipster")
 
 // extract plain text from a code block
 function extractLine (a) {
@@ -33,6 +35,31 @@ function request(blocks, onSuccessFunction) {
             });
         });
         onSuccessFunction(res);
+        jQuery(function() {
+            jQuery('span').tooltipster( {
+
+                functionInit: function(origin, content) {
+                    $.ajax({
+                        type: 'GET',
+                        crossDomain: true,
+                        beforeSend: function (request)
+                        {
+                            request.setRequestHeader("Access-Control-Request-Headers", "x-requested-with");
+                            request.setRequestHeader("Access-Control-Allow-Origin", "http://codatlas.com");
+                            request.setRequestHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
+                        },
+                        url: "http://codatlas.com/loadMetadata/github.com/openjdk-mirror/jdk7u-jdk/master/src/share/classes/java/lang/String.java",
+                        success: function(data) {
+                            origin.tooltipster('content', 'New content comes');
+                        }
+                    });
+                    // this returned string will overwrite the content of the tooltip for the time being
+                    return 'Wait while we load new content...';
+                }
+            }
+
+            );
+        });
         ws.close();
     };
 

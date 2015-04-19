@@ -40,9 +40,10 @@
         // take care to correctly set lambdaRange for new node too
       }
 
-      var spanNode = $("<span>").
-        addClass(clsName).attr("signature", signature).
-        text(textContent.substring(
+      var spanNode = $("<span>")
+          .addClass(clsName).attr("signature", signature)
+          .addClass("tooltip")
+          .text(textContent.substring(
           intersectRange.start - lambdaRange.start,
           intersectRange.end - lambdaRange.start)
         );
