@@ -32,5 +32,6 @@ Using codatlas service is simple, just put the following lines in your webpage:
 ````html
 <script src="/codatlas.js"></script>
 <link rel="stylesheet" href="/codatlas.css" />
+<link rel="stylesheet" href="/tooltipster.css" />
 ````
 
