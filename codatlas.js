@@ -182,6 +182,45 @@ global.jQuery = require("jquery");
 var $ = global.jQuery;
 require("tooltipster")
 
+/**********
+Cross domain helper
+***********/
+function createCORSRequest(method, url) {
+  var xhr = new XMLHttpRequest();
+  if ("withCredentials" in xhr) {
+
+    // Check if the XMLHttpRequest object has a "withCredentials" property.
+    // "withCredentials" only exists on XMLHTTPRequest2 objects.
+    xhr.open(method, url, true);
+
+  } else if (typeof XDomainRequest != "undefined") {
+
+    // Otherwise, check if XDomainRequest.
+    // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+    xhr = new XDomainRequest();
+    xhr.open(method, url);
+
+  } else {
+
+    // Otherwise, CORS is not supported by the browser.
+    xhr = null;
+
+  }
+  return xhr;
+}
+
+/**********
+Codatlas request helper
+***********/
+function getNodeRequest(signature) {
+  return "http://codatlas.com/getNode/" + encodeURIComponent(signature)
+}
+
+function gotoNodeRequest(signature) {
+  return "http://www.codatlas.com/gotoNode/" + encodeURIComponent(signature);
+}
+
+
 // extract plain text from a code block
 function extractLine (a) {
     return $(a).text();
@@ -212,30 +251,38 @@ function request(blocks, onSuccessFunction) {
             });
         });
         onSuccessFunction(res);
+
         jQuery(function() {
-            jQuery('span').tooltipster( {
+            jQuery('.tooltip').tooltipster( {
 
                 functionInit: function(origin, content) {
-                    $.ajax({
-                        type: 'GET',
-                        crossDomain: true,
-                        beforeSend: function (request)
-                        {
-                            request.setRequestHeader("Access-Control-Request-Headers", "x-requested-with");
-                            request.setRequestHeader("Access-Control-Allow-Origin", "http://codatlas.com");
-                            request.setRequestHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
-                        },
-                        url: "http://codatlas.com/loadMetadata/github.com/openjdk-mirror/jdk7u-jdk/master/src/share/classes/java/lang/String.java",
-                        success: function(data) {
-                            origin.tooltipster('content', 'New content comes');
-                        }
-                    });
-                    // this returned string will overwrite the content of the tooltip for the time being
-                    return 'Wait while we load new content...';
-                }
-            }
+                    var signature = jQuery(origin).attr("signature");
+                    if (!signature) return;
+                    var url = getNodeRequest(signature);
+                    var xhr = createCORSRequest('GET', url);
+                    if (!xhr) {
+                        return "can not load more info";
+                    }
 
-            );
+                    xhr.onload = function() {
+                        var responseText = xhr.responseText;
+                        var response = JSON.parse(responseText);
+                        if (response.doc != undefined && response.doc) {
+                          jQuery(origin).tooltipster({
+                            multiple: true,
+                            maxWidth: 700,
+                            content: jQuery(jQuery.parseHTML(response.doc))
+                          });
+                        }
+                    };
+
+                    xhr.onerror = function() {
+                        console.log('There was an error calling codatlas.com/getNode');
+                    };
+
+                    xhr.send();
+                }
+            });
         });
         ws.close();
     };
@@ -284,7 +331,7 @@ function applyDecoration(i, decoratedBlock) {
         });
         return symbolTbl;
     }
-    
+
     var block = decoratedBlock["block"];
     var metaData = decoratedBlock["meta_data"];
 
@@ -292,7 +339,7 @@ function applyDecoration(i, decoratedBlock) {
 
     nodeClickFuncMk = function (id) {
         return function() {
-            window.open("http://www.codatlas.com/gotoNode/" + encodeURIComponent(id));
+            window.open(gotoNodeRequest(id));
         }
     };
 
@@ -301,11 +348,12 @@ function applyDecoration(i, decoratedBlock) {
         $.each(metaDataDocument.nodes, function (i, node) {
             eventMap = {};
             if (symbolTbl.hasOwnProperty(node.signature)) {
-                eventMap.click = nodeClickFuncMk(symbolTbl[node.signature]);
+                node.signature = symbolTbl[node.signature];
+                eventMap.click = nodeClickFuncMk(node.signature);
+
             } else {
                 eventMap.click = nodeClickFuncMk(node.signature);
-            }            
-
+            }
             SourcePageDecorator.addSpanToDomTree(block, node, parseNodeClassName_(node.kind), eventMap);
         });
     }
