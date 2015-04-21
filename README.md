@@ -26,6 +26,11 @@ at dalvik.system.NativeStart.main(Native Method)
 </code>
 </pre>
 
+## Dependency
+* [tooltipster](https://github.com/iamceege/tooltipster/)
+* [jquery](https://github.com/jquery/jquery)
+* [underscore](https://github.com/jashkenas/underscore)
+They are all packed with `codatlas.js` now. Use with caution if you extend them. 
 
 ## Getting started
 Using codatlas service is simple, just put the following lines in your webpage:
