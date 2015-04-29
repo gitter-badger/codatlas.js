@@ -234,7 +234,13 @@ function request(blocks, onSuccessFunction) {
     ws.onopen = function() {
         var req = [];
         $.each(blocks, function(i, b) {
-            req.push(extractLine(b));
+            var lang = $(b).attr("data-codatlas-lang");
+            var a = {
+                lang: lang,
+                code: extractLine(b)
+            };
+            console.log("%o", a);
+            req.push(a);
         });
         ws.send(JSON.stringify(req));
     };
@@ -306,6 +312,7 @@ function filterCodeBlocks (blocks) {
 function gatherCodeBlocks() {
     var raw_blocks =
         $("pre, code, .CodeMirror-lines, .dp-highlighter, .syntaxhighlighter")
+        .filter("[data-codatlas-lang]")
         .filter(":visible")
         .filter(":not(pre *)")
         .filter(":not(.CodeMirror-lines *)")
