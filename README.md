@@ -34,7 +34,9 @@ at dalvik.system.NativeStart.main(Native Method)
 They are all packed with `codatlas.js` now. Use with caution if you extend them. 
 
 ## Getting started
-Using codatlas service is simple, just put the following lines in your webpage:
+Using codatlas service is simple, just put the following lines in your webpage,
+all the source code are under `dist` folder:
+
 ````html
 <script src="/codatlas.js"></script>
 <link rel="stylesheet" href="/codatlas.css" />
@@ -67,3 +69,10 @@ at dalvik.system.NativeStart.main(Native Method)
 </code>
 </pre>
 ````
+
+## Build
+To generate `codatlas.js`, `cd` to `src`, then type:
+````
+make gen
+````
+It will generate a file named `codatlas.js` under the same directory.
