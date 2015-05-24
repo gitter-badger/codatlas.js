@@ -175,7 +175,9 @@ exports.process = apply_;
 
 },{"./MetaDataEnum_types.js":1,"underscore":7}],3:[function(require,module,exports){
 (function (global){
-var serverUri = "ws://www.codatlas.com:9020/socket"
+var serverUri = "ws://codatlas.com:9020/socket"
+var getNodeUri = "https://codatlas.com/getNode/"
+var gotoNodeUri = "https://www.codatlas.com/gotoNode/"
 var SourcePageDecorator = require("./SourcepageDecorator.js");
 var MetadataProcessor = require("./MetadataProcessor.js");
 global.jQuery = require("jquery");
@@ -213,11 +215,11 @@ function createCORSRequest(method, url) {
 Codatlas request helper
 ***********/
 function getNodeRequest(signature) {
-  return "http://codatlas.com/getNode/" + encodeURIComponent(signature)
+  return getNodeUri + encodeURIComponent(signature)
 }
 
 function gotoNodeRequest(signature) {
-  return "http://www.codatlas.com/gotoNode/" + encodeURIComponent(signature);
+  return gotoNodeUri + encodeURIComponent(signature);
 }
 
 
@@ -239,7 +241,6 @@ function request(blocks, onSuccessFunction) {
                 lang: lang,
                 code: extractLine(b)
             };
-            console.log("%o", a);
             req.push(a);
         });
         ws.send(JSON.stringify(req));
