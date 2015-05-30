@@ -35,10 +35,10 @@
                 and deeper understanding of you program!
             </p>
             <h2>
-                <a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example
+                <a id="stacktrace-example" class="anchor" href="#stacktrace-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Stacktrace
             </h2>
             <p>Following is a stacktrace, codatlas.js will recognize and annotate java class names so you can directly jump to its definition. It's that simple!</p>
-            <pre data-codatlas-lang="stacktrace">
+<pre data-codatlas-lang="stacktrace">
 <code>
 java.lang.ClassCastException: android.os.BinderProxy cannot be cast to com.ayst.healthkit.cq
 at com.ayst.healthkit.bp.onServiceConnected(MainActivity.java:492)
@@ -54,6 +54,25 @@ at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:82
 at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:640)
 at dalvik.system.NativeStart.main(Native Method)
 </code>
+</pre>
+
+            <h2>
+              <a id="java-example" class="anchor" href="#java-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Java
+            </h2>
+<pre data-codatlas-lang="java">
+<code>import java.util.ArrayList;
+import java.util.List;
+
+public class Bicycle {
+
+    public int speed;
+    public List<String> names;
+
+    public Bicycle() {
+        speed = 9.8;
+        names = new ArrayList<String>();
+    }
+}</code>
 </pre>
             <h2>
                 <a id="dependency" class="anchor" href="#dependency" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dependency
