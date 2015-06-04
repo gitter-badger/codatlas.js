@@ -16,6 +16,8 @@ and deeper understanding of you program!
 
 ## Example
 
+[![Join the chat at https://gitter.im/lambdalab/codatlas.js](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/lambdalab/codatlas.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 <pre data-codatlas-lang="stacktrace">
 <code>
 java.lang.ClassCastException: android.os.BinderProxy cannot be cast to com.ayst.healthkit.cq
