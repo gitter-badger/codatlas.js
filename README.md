@@ -1,4 +1,9 @@
-# codatlas.js
+    /\  ___\   /\  __ \   /\  __-.  /\  __ \   /\__  _\ /\ \       /\  __ \   /\  ___\   
+    \ \ \____  \ \ \/\ \  \ \ \/\ \ \ \  __ \  \/_/\ \/ \ \ \____  \ \  __ \  \ \___  \  
+     \ \_____\  \ \_____\  \ \____-  \ \_\ \_\    \ \_\  \ \_____\  \ \_\ \_\  \/\_____\ 
+      \/_____/   \/_____/   \/____/   \/_/\/_/     \/_/   \/_____/   \/_/\/_/   \/_____/ 
+
+
 [Codatlas](http://codatlas.com) understands program just as your IDE
 does. It's just for the Web from its very beginning. More scalable and
 accessible. `codatlas.js` provides a convenient way to combine
